@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-@CrossOrigin(origins = "https://retailsoff-fe.herokuapp.com/")
+@CrossOrigin(origins = "https://dashboard.heroku.com/apps/retailsoff-be")
 @RestController
 public class ProductoController {
 
@@ -55,4 +55,20 @@ public class ProductoController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @PutMapping("/producto/{idProducto}")
+    public ResponseEntity<Producto> modificarProducto(@RequestBody Producto producto){
+
+        Producto productoAModificar = productoService.buscarProductoById(producto.getId());
+        productoAModificar.setActivo(producto.getActivo());
+        productoAModificar.setId(producto.getId());
+        productoAModificar.setProveedor(producto.getProveedor());
+        productoAModificar.setNombre(producto.getNombre());
+        productoAModificar.setCategoria(producto.getCategoria());
+        productoAModificar.setPromocionProductos(producto.getPromocionProductos());
+        productoAModificar.setStock(producto.getStock());
+        productoAModificar.setPrecioUnitario(producto.getPrecioUnitario());
+
+        productoService.modificar(productoAModificar);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
