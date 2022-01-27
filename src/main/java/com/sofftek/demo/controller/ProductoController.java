@@ -24,14 +24,14 @@ public class ProductoController {
     @Autowired
     private ProductoService productoService;
 
-    @CrossOrigin(origins = "http://localhost:3000/")
+    @CrossOrigin(origins = "*")
     @GetMapping("/productos")
     public ResponseEntity<List<Producto>> listarProductos(@RequestParam(required=false, defaultValue="World")String name){
         List<Producto> listado = productoService.listarActivos();
         return new ResponseEntity<>(listado, HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "http://localhost:3000/")
+    @CrossOrigin(origins = "*")
     @GetMapping("/productos/page/{page}")
     public ResponseEntity<Page<Producto>> listarProductosPage(@PathVariable Integer page){
 
@@ -41,7 +41,7 @@ public class ProductoController {
         return new ResponseEntity<>(listado, HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "http://localhost:3000/")
+    @CrossOrigin(origins = "*")
     @PostMapping(path = "producto",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
@@ -51,28 +51,11 @@ public class ProductoController {
         return new ResponseEntity<>(producto, HttpStatus.CREATED);
     }
 
-    @CrossOrigin(origins = "http://localhost:3000/")
+    @CrossOrigin(origins = "*")
     @DeleteMapping("/productos/{idProducto}")
     public ResponseEntity<Producto> eliminarProducto(@PathVariable int idProducto){
         productoService.eliminar(idProducto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "http://localhost:3000/")
-    @PutMapping("/producto/{idProducto}")
-    public ResponseEntity<Producto> modificarProducto(@RequestBody Producto producto){
-
-        Producto productoAModificar = productoService.buscarProductoById(producto.getId());
-        productoAModificar.setActivo(producto.getActivo());
-        productoAModificar.setId(producto.getId());
-        productoAModificar.setProveedor(producto.getProveedor());
-        productoAModificar.setNombre(producto.getNombre());
-        productoAModificar.setCategoria(producto.getCategoria());
-        productoAModificar.setPromocionProductos(producto.getPromocionProductos());
-        productoAModificar.setStock(producto.getStock());
-        productoAModificar.setPrecioUnitario(producto.getPrecioUnitario());
-
-        productoService.modificar(productoAModificar);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
 }

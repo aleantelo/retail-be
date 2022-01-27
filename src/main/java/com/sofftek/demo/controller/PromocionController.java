@@ -19,13 +19,13 @@ public class PromocionController {
     @Autowired
     private PromocionService promocionService;
 
-    @CrossOrigin(origins = "http://localhost:3000/")
+    @CrossOrigin(origins = "*")
     @GetMapping("/promociones")
     public List<Promocion> listarPromociones(){
         return promocionService.listarActivos();
     }
 
-    @CrossOrigin(origins = "http://localhost:3000/")
+    @CrossOrigin(origins = "*")
     @PostMapping(path = "promocion/{id}",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
@@ -38,24 +38,19 @@ public class PromocionController {
         }
     }
 
-    @CrossOrigin(origins = "http://localhost:3000/")
+    @CrossOrigin(origins = "*")
     @DeleteMapping("/promocion/{idPromocion}")
     public ResponseEntity<Promocion> eliminarPromocion(@PathVariable int idPromocion){
         promocionService.eliminar(idPromocion);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "http://localhost:3000/")
+    @CrossOrigin(origins = "*")
     @PostMapping("/promocion/{idPromocion}")
     public ResponseEntity<Promocion> modificarPromocion(@RequestBody Promocion promocion){
         promocionService.modificar(promocion);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "http://localhost:3000/")
-    @GetMapping("/promociones/agregar")
-    public String crearCliente() {
 
-        return "promociones Creadas";
-    }
 }

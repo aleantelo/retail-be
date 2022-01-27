@@ -20,14 +20,14 @@ public class DetalleOrdenController {
     @Autowired
     DetalleService detalleService ;
 
-    @CrossOrigin(origins = "http://localhost:3000/")
+    @CrossOrigin(origins = "*")
     @GetMapping("/detalles")
     public ResponseEntity<List<Detalle>> listarDetalles(@RequestParam(required=false, defaultValue="World")String name){
         List<Detalle> listado = detalleService.listarActivos();
         return new ResponseEntity<>(listado, HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "http://localhost:3000/")
+    @CrossOrigin(origins = "*")
     @GetMapping("/detalles/page/{page}")
     public ResponseEntity<Page<Detalle>> listarDetallesPage(@PathVariable Integer page){
 
@@ -37,7 +37,7 @@ public class DetalleOrdenController {
         return new ResponseEntity<>(listado, HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "http://localhost:3000/")
+    @CrossOrigin(origins = "*")
     @PostMapping(path = "detalle",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
@@ -53,7 +53,7 @@ public class DetalleOrdenController {
         return new ResponseEntity<>(detalleOrden, HttpStatus.CREATED);
     }
 
-    @CrossOrigin(origins = "http://localhost:3000/")
+    @CrossOrigin(origins = "*")
     @PutMapping("/detalle/{idDetalle}")
     public ResponseEntity<Detalle> modificarDetalle(@RequestBody Detalle detalleOrden){
 
@@ -66,28 +66,12 @@ public class DetalleOrdenController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "http://localhost:3000/")
+    @CrossOrigin(origins = "*")
     @DeleteMapping("/detalles/{idDetalle}")
     public ResponseEntity<Producto> eliminarDetalle(@PathVariable int idDetalle){
         detalleService.eliminar(idDetalle);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/detalles/agregar")
-    public void agregarDetalles(){
 
-        Producto producto = new Producto();
-        producto.setStock(200);
-        producto.setNombre("pantalon");
-        producto.setPrecioUnitario(200);
-
-        Detalle detalleOrden  = new Detalle();
-
-        detalleOrden.setProducto(producto);
-        detalleOrden.setCantidad(2);
-
-
-
-        detalleService.insertar(detalleOrden);
-    }
 }

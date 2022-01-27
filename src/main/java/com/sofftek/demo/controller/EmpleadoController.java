@@ -22,7 +22,7 @@ public class EmpleadoController {
     @Autowired
     EmpleadoService empleadoService;
 
-    @CrossOrigin(origins = "http://localhost:3000/")
+    @CrossOrigin(origins = "*")
     @GetMapping("/empleados")
     public List<Empleado> listarEmpleados(){
 
@@ -31,7 +31,7 @@ public class EmpleadoController {
          return empleados;
     }
 
-    @CrossOrigin(origins = "http://localhost:3000/")
+    @CrossOrigin(origins = "*")
     @PostMapping(path = "empleado",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
@@ -55,21 +55,21 @@ public class EmpleadoController {
             return new ResponseEntity<>(empleado, HttpStatus.CREATED);
     }
 
-    @CrossOrigin(origins = "http://localhost:3000/")
+    @CrossOrigin(origins = "*")
     @DeleteMapping("/empleado/{idEmpleado}")
     public ResponseEntity<Empleado> eliminarEmpleado(@PathVariable int idEmpleado){
         empleadoService.eliminar(idEmpleado);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "http://localhost:3000/")
+    @CrossOrigin(origins = "*")
     @PostMapping("/empleado/{idEmpleado}")
     public ResponseEntity<Empleado> modificarEmpleado(@RequestBody Empleado empleado){
         empleadoService.modificar(empleado);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "http://localhost:3000/")
+    @CrossOrigin(origins = "*")
     @GetMapping("/empleado/agregar")
     public String agregarEmpleado(){
         Empleado empleado = new Empleado();

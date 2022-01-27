@@ -20,13 +20,13 @@ public class ClienteController {
     @Autowired
     private ClienteService clienteService;
 
-    @CrossOrigin(origins = "http://localhost:3000/")
+    @CrossOrigin(origins = "*")
     @GetMapping("/clientes")
     public List<Cliente> listarClientes(){
         return clienteService.listarActivos();
     }
 
-    @CrossOrigin(origins = "http://localhost:3000/")
+    @CrossOrigin(origins = "*")
     @PostMapping(path = "cliente",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
@@ -39,40 +39,21 @@ public class ClienteController {
         }
     }
 
-    @CrossOrigin(origins = "http://localhost:3000/")
+    @CrossOrigin(origins = "*")
     @DeleteMapping("/cliente/{idCliente}")
     public ResponseEntity<Cliente> eliminarCliente(@PathVariable int idCliente){
         clienteService.eliminar(idCliente);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "http://localhost:3000/")
+    @CrossOrigin(origins = "*")
     @PostMapping("/cliente/{idCliente}")
     public ResponseEntity<Cliente> modificarCliente(@RequestBody Cliente cliente){
         clienteService.modificar(cliente);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "http://localhost:3000/")
-    @GetMapping("/clientes/agregar")
-    public String crearCliente() {
-        Cliente cliente = new Cliente();
-        cliente.setTipoDeCliente(TipoDeCliente.EMPRESA);
-        cliente.setApellido("Antelo");
-        cliente.setNombre("Alejandro");
-        cliente.setDni(37803270);
-        cliente.setRazon_social("Empresita");
-        clienteService.insertar(cliente);
 
-        Cliente clientee = new Cliente();
-        clientee.setTipoDeCliente(TipoDeCliente.PARTICULAR);
-        clientee.setApellido("Jauregui");
-        clientee.setNombre("Lucia");
-        clientee.setDni(39107509);
-        clientee.setRazon_social("Parti");
-        clienteService.insertar(clientee);
-        return "Clientes Creados";
-        }
     }
 
 

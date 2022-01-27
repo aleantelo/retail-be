@@ -26,33 +26,33 @@ public class OrdenController {
     @Autowired
     OrdenService ordenService;
 
-    @CrossOrigin(origins = "http://localhost:3000/")
+    @CrossOrigin(origins = "*")
     @GetMapping("/ordenes")
-    public ResponseEntity<List<Orden>> listarOrdenes(@RequestParam(required=false, defaultValue="World")String name){
+    public ResponseEntity<List<Orden>> listarOrdenes(@RequestParam(required = false, defaultValue = "World") String name) {
         System.out.println("ESTOY ENTRANDO AL CONTROLLER DE ORDENES");
         List<Orden> listado = ordenService.listarActivos();
         return new ResponseEntity<>(listado, HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "http://localhost:3000/")
+    @CrossOrigin(origins = "*")
     @GetMapping("/ordenes/page/{page}")
-    public ResponseEntity<Page<Orden>> listarOrdenesPorPage(@PathVariable Integer page){
+    public ResponseEntity<Page<Orden>> listarOrdenesPorPage(@PathVariable Integer page) {
 
-        Pageable pageable = PageRequest.of(page,2);
+        Pageable pageable = PageRequest.of(page, 2);
 
         Page<Orden> listado = ordenService.listarActivos(pageable);
         return new ResponseEntity<>(listado, HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "http://localhost:3000/")
+    @CrossOrigin(origins = "*")
     @PostMapping(path = "orden")
-    public String insertarOrden( @RequestBody List<Detalle> detalles) {
+    public String insertarOrden(@RequestBody List<Detalle> detalles) {
 
         Producto produ = new Producto();
         Set<Detalle> detallesAInsertar = new HashSet<>();
         Detalle detalleAInsertar = new Detalle();
         Orden ordenAInsertar = new Orden();
-        for(Detalle detalle:detalles){
+        for (Detalle detalle : detalles) {
             produ.setId(detalle.getProducto().getId());
             produ.setActivo(detalle.getProducto().getActivo());
             produ.setPrecioUnitario(detalle.getProducto().getPrecioUnitario());
@@ -66,23 +66,23 @@ public class OrdenController {
 
         ordenService.insertar(ordenAInsertar);
 
-        return  "CREADO";
+        return "CREADO";
     }
 
-    @CrossOrigin(origins = "http://localhost:3000/")
+    @CrossOrigin(origins = "*")
     @DeleteMapping("/ordenes/{idOrden}")
-    public ResponseEntity<Orden> eliminarOrden(@PathVariable int idOrden){
+    public ResponseEntity<Orden> eliminarOrden(@PathVariable int idOrden) {
         ordenService.eliminar(idOrden);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "http://localhost:3000/")
+    @CrossOrigin(origins = "*")
     @PutMapping("/orden/{idOrden}")
-    public ResponseEntity<Orden> modificarOrden(@RequestBody Orden orden){
+    public ResponseEntity<Orden> modificarOrden(@RequestBody Orden orden) {
         Set<Detalle> detalles = new HashSet<>();
         Producto produ;
         Detalle detalleAModificar;
-        for(Detalle detalle:orden.getDetalles()){
+        for (Detalle detalle : orden.getDetalles()) {
             produ = productoService.buscarProductoById(detalle.getProducto().getId());
             produ.setPrecioUnitario(detalle.getProducto().getPrecioUnitario());
             produ.setProveedor(detalle.getProducto().getProveedor());
@@ -102,7 +102,7 @@ public class OrdenController {
         Orden ordenAModificar = new Orden();
         ordenAModificar.setActivo(orden.getActivo());
         ordenAModificar.setDetalles(detalles);
-        ordenAModificar .setCliente(orden.getCliente());
+        ordenAModificar.setCliente(orden.getCliente());
         ordenAModificar.setEstado(orden.getEstado());
         ordenAModificar.setVendedor(orden.getVendedor());
         ordenAModificar.setFechaDeEntrega(orden.getFechaDeEntrega());
@@ -113,39 +113,4 @@ public class OrdenController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "http://localhost:3000/")
-    @GetMapping("/ordenes/agregar")
-    public void agregarOrden(@RequestParam(required=false, defaultValue="World")String name){
-
-        Producto producto = new Producto();
-        producto.setStock(200);
-        producto.setNombre("pantalon");
-        producto.setPrecioUnitario(200);
-
-        Detalle detalleOrden  = new Detalle();
-
-        detalleOrden.setProducto(producto);
-        detalleOrden.setCantidad(2);
-//------------------------------------------------------------------------------------------
-        Producto produ = new Producto();
-        produ.setStock(100);
-        produ.setNombre("Buzo");
-        produ.setPrecioUnitario(100);
-
-        Detalle detalleOrden1  = new Detalle();
-        detalleOrden1.setProducto(producto);
-        detalleOrden1.setCantidad(1);
-        Set<Detalle> listDetalle = new HashSet<>();
-        listDetalle.add(detalleOrden);
-        listDetalle.add(detalleOrden1);
-        Cliente cliente = new Cliente();
-        cliente.setNombre("Alejandro");
-        cliente.setDni(37803270);
-        cliente.setApellido("Antelo");
-
-        Orden orden = new Orden();
-        orden.setCliente(cliente);
-        orden.setDetalles(listDetalle);
-        ordenService.insertar(orden);
-    }
 }

@@ -19,13 +19,13 @@ public class CategoriaController {
     @Autowired
     private CategoriaService categoriaService;
 
-    @CrossOrigin(origins = "http://localhost:3000/")
+    @CrossOrigin(origins = "*")
     @GetMapping("/categorias")
     public List<Categoria> listarCategorias(){
         return categoriaService.listarActivos();
     }
 
-    @CrossOrigin(origins = "http://localhost:3000/")
+    @CrossOrigin(origins = "*")
     @PostMapping(path = "categorias",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
@@ -38,37 +38,19 @@ public class CategoriaController {
         }
     }
 
-    @CrossOrigin(origins = "http://localhost:3000/")
+    @CrossOrigin(origins = "*")
     @DeleteMapping("/categoria/{idCategoria}")
     public ResponseEntity<Categoria> eliminarCategoria(@PathVariable int idCategoria){
         categoriaService.eliminar(idCategoria);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "http://localhost:3000/")
+    @CrossOrigin(origins = "*")
     @PostMapping("/categoria/{idCategoria}")
     public ResponseEntity<Categoria> modificarCategoria(@RequestBody Categoria categoria){
         categoriaService.modificar(categoria);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    /*@GetMapping("/clientes/agregar")
-    public String crearCliente() {
-        Cliente cliente = new Cliente();
-        cliente.setTipoDeCliente(TipoDeCliente.EMPRESA);
-        cliente.setApellido("Antelo");
-        cliente.setNombre("Alejandro");
-        cliente.setDni(37803270);
-        cliente.setRazon_social("Empresita");
-        clienteService.insertar(cliente);
 
-        Cliente clientee = new Cliente();
-        clientee.setTipoDeCliente(TipoDeCliente.PARTICULAR);
-        clientee.setApellido("Jauregui");
-        clientee.setNombre("Lucia");
-        clientee.setDni(39107509);
-        clientee.setRazon_social("Parti");
-        clienteService.insertar(clientee);
-        return "Clientes Creados";
-    }*/
 }
