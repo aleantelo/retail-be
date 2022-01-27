@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-@CrossOrigin(origins = "https://dashboard.heroku.com/apps/retailsoff-be")
+@CrossOrigin(origins = "https://dashboard.heroku.com/apps/retailsoff-fe")
 @RestController
 public class ProductoController {
 
