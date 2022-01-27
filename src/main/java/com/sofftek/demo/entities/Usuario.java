@@ -19,11 +19,6 @@ public class Usuario extends Activable {
     @Column(name = "contraseña")
     private String contraseña;
 
-    @ManyToMany(targetEntity = Rol.class,cascade = CascadeType.ALL)
-    @JoinTable(
-            name="usuario_tiene_rol",
-            joinColumns = {@JoinColumn(name = "usuario_id")},
-            inverseJoinColumns = {@JoinColumn(name = "rol_id")}
-    )
-    private Set<Rol> roles;
+    @Column(name = "tipo")
+    private String tipoDeUsuario;
 }

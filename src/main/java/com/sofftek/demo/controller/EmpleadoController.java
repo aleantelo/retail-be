@@ -3,6 +3,7 @@ package com.sofftek.demo.controller;
 
 import com.sofftek.demo.entities.Cliente;
 import com.sofftek.demo.entities.Empleado;
+import com.sofftek.demo.entities.Usuario;
 import com.sofftek.demo.service.EmpleadoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,12 +36,23 @@ public class EmpleadoController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Empleado> insertarEmpleado(@RequestBody Empleado empleado) {
-        if (empleado == null) {
-            return new ResponseEntity<>(empleado, HttpStatus.OK);
-        } else {
-            empleadoService.insertar(empleado);
+            System.out.println("APELLIDO: " + empleado.getApellido());
+             System.out.println("Nombre de Usuario: " + empleado.getUsuario().getNombreDeUsuario());
+
+
+        Empleado emple = new Empleado();
+            Usuario usuarioAInsertar = new Usuario();
+            usuarioAInsertar.setContraseña(empleado.getUsuario().getContraseña());
+            usuarioAInsertar.setNombreDeUsuario(empleado.getUsuario().getNombreDeUsuario());
+            if(empleado.getUsuario().getTipoDeUsuario() == "ADMIN"){
+                usuarioAInsertar.setTipoDeUsuario(empleado.getUsuario().getTipoDeUsuario());
+            }
+            emple.setUsuario(usuarioAInsertar);
+            emple.setApellido(empleado.getApellido());
+            emple.setNombre(empleado.getNombre());
+
+            empleadoService.insertar(emple);
             return new ResponseEntity<>(empleado, HttpStatus.CREATED);
-        }
     }
 
     @CrossOrigin(origins = "http://localhost:3000/")

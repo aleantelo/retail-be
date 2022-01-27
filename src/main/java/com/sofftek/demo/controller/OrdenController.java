@@ -12,10 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @RestController
 public class OrdenController {
@@ -49,42 +46,25 @@ public class OrdenController {
 
     @CrossOrigin(origins = "http://localhost:3000/")
     @PostMapping(path = "orden")
-    public String insertarOrden( @RequestParam Map<String,String> lista) {
-        System.out.println("DETALLE" + lista.get("detalle"));
-        System.out.println("CANTIDAD" + lista.get("cantidad"));
+    public String insertarOrden( @RequestBody List<Detalle> detalles) {
 
-        Set<Detalle> detalles = new HashSet<>();
-        Producto produ;
-        Detalle detalleAInsertarEnOrden;
-        /*for(Detalle detalle:orden.getDetalles()){
-            produ = productoService.buscarProductoById(detalle.getProducto().getId());
-            produ.setPrecioUnitario(detalle.getProducto().getPrecioUnitario());
-            produ.setProveedor(detalle.getProducto().getProveedor());
-            produ.setStock(detalle.getProducto().getStock());
-            produ.setNombre(detalle.getProducto().getNombre());
-            produ.setActivo(detalle.getProducto().getActivo());
-            produ.setId(detalle.getProducto().getId());
-            produ.setCategoria(detalle.getProducto().getCategoria());
-            produ.setPromocionProductos(detalle.getProducto().getPromocionProductos());
-            detalleAInsertarEnOrden = detalleService.buscarDetalleById(detalle.getId());
-            detalleAInsertarEnOrden.setProducto(produ);
-            detalleAInsertarEnOrden.setActivo(detalle.getActivo());
-            detalleAInsertarEnOrden.setId(detalle.getId());
-            detalleAInsertarEnOrden.setCantidad(detalle.getCantidad());
-            detalles.add(detalleAInsertarEnOrden);
-        }
-
+        Producto produ = new Producto();
+        Set<Detalle> detallesAInsertar = new HashSet<>();
+        Detalle detalleAInsertar = new Detalle();
         Orden ordenAInsertar = new Orden();
-        ordenAInsertar.setActivo(orden.getActivo());
-        ordenAInsertar.setDetalles(detalles);
-        ordenAInsertar.setCliente(orden.getCliente());
-        ordenAInsertar.setEstado(orden.getEstado());
-        ordenAInsertar.setVendedor(orden.getVendedor());
-        ordenAInsertar.setFechaDeEntrega(orden.getFechaDeEntrega());
-        ordenAInsertar.setFechaGenerada(orden.getFechaGenerada());
-        ordenAInsertar.setId(orden.getId());
+        for(Detalle detalle:detalles){
+            produ.setId(detalle.getProducto().getId());
+            produ.setActivo(detalle.getProducto().getActivo());
+            produ.setPrecioUnitario(detalle.getProducto().getPrecioUnitario());
+            produ.setNombre(detalle.getProducto().getNombre());
+            produ.setStock(detalle.getProducto().getStock());
+            detalleAInsertar.setCantidad((detalle.getCantidad()));
+            detalleAInsertar.setProducto(produ);
+            detallesAInsertar.add(detalleAInsertar);
+        }
+        ordenAInsertar.agregarDetalles(detallesAInsertar);
 
-        ordenService.insertar(ordenAInsertar);*/
+        ordenService.insertar(ordenAInsertar);
 
         return  "CREADO";
     }

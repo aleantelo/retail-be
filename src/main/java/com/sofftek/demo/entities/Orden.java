@@ -8,6 +8,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -49,7 +50,9 @@ public class Orden extends Activable{
         this.setFechaGenerada(LocalDate.now());
     }
 
-    public void agregarProveedores(Detalle... detallesOrdens){
-        Collections.addAll(this.detalles,detallesOrdens);
+    public void agregarDetalles(Set<Detalle> listaDetalles){
+        for (Detalle detalle:listaDetalles){
+            detalles.add(detalle);
+        }
     }
 }
