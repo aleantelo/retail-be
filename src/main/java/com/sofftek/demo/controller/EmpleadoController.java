@@ -3,6 +3,7 @@ package com.sofftek.demo.controller;
 
 import com.sofftek.demo.entities.Cliente;
 import com.sofftek.demo.entities.Empleado;
+import com.sofftek.demo.entities.Producto;
 import com.sofftek.demo.entities.Usuario;
 import com.sofftek.demo.service.EmpleadoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,11 +25,11 @@ public class EmpleadoController {
     EmpleadoService empleadoService;
 
     @GetMapping("/empleados")
-    public List<Empleado> listarEmpleados(){
+    public ResponseEntity<List<Empleado>> listarEmpleados(@RequestParam(required=false, defaultValue="World")String name){
 
         List<Empleado> empleados = empleadoService.listarActivos();
 
-         return empleados;
+        return new ResponseEntity<>(empleados, HttpStatus.OK);
     }
 
     @PostMapping(path = "empleado",
