@@ -11,19 +11,18 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "*")
 @RestController
 public class UsuarioController {
 
     @Autowired
     private UsuarioService usuarioService;
 
-    @CrossOrigin(origins = "*")
     @GetMapping("/usuarios")
     public List<Usuario> listarUsuarios(){
         return usuarioService.listarActivos();
     }
 
-    @CrossOrigin(origins = "*")
     @PostMapping(path = "usuario/{id}",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
@@ -36,14 +35,13 @@ public class UsuarioController {
         }
     }
 
-    @CrossOrigin(origins = "*")
     @DeleteMapping("/usuario/{idUsuario}")
     public ResponseEntity<Usuario> eliminarUsuario(@PathVariable int idUsuario){
         usuarioService.eliminar(idUsuario);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "*")
+
     @PostMapping("/usuario/{idUsuario}")
     public ResponseEntity<Usuario> modificarUsuario(@RequestBody Usuario usuario){
         Usuario usuarioAModificar = usuarioService.buscarUsuarioById(usuario.getId());

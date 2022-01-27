@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
+@CrossOrigin(origins = "*")
 @RestController
 public class OrdenController {
 
@@ -26,7 +27,6 @@ public class OrdenController {
     @Autowired
     OrdenService ordenService;
 
-    @CrossOrigin(origins = "*")
     @GetMapping("/ordenes")
     public ResponseEntity<List<Orden>> listarOrdenes(@RequestParam(required = false, defaultValue = "World") String name) {
         System.out.println("ESTOY ENTRANDO AL CONTROLLER DE ORDENES");
@@ -34,7 +34,6 @@ public class OrdenController {
         return new ResponseEntity<>(listado, HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "*")
     @GetMapping("/ordenes/page/{page}")
     public ResponseEntity<Page<Orden>> listarOrdenesPorPage(@PathVariable Integer page) {
 
@@ -44,7 +43,6 @@ public class OrdenController {
         return new ResponseEntity<>(listado, HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "*")
     @PostMapping(path = "orden")
     public String insertarOrden(@RequestBody List<Detalle> detalles) {
 
@@ -69,14 +67,12 @@ public class OrdenController {
         return "CREADO";
     }
 
-    @CrossOrigin(origins = "*")
     @DeleteMapping("/ordenes/{idOrden}")
     public ResponseEntity<Orden> eliminarOrden(@PathVariable int idOrden) {
         ordenService.eliminar(idOrden);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "*")
     @PutMapping("/orden/{idOrden}")
     public ResponseEntity<Orden> modificarOrden(@RequestBody Orden orden) {
         Set<Detalle> detalles = new HashSet<>();

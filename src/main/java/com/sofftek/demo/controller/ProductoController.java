@@ -18,20 +18,19 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
+@CrossOrigin(origins = "*")
 @RestController
 public class ProductoController {
 
     @Autowired
     private ProductoService productoService;
 
-    @CrossOrigin(origins = "*")
     @GetMapping("/productos")
     public ResponseEntity<List<Producto>> listarProductos(@RequestParam(required=false, defaultValue="World")String name){
         List<Producto> listado = productoService.listarActivos();
         return new ResponseEntity<>(listado, HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "*")
     @GetMapping("/productos/page/{page}")
     public ResponseEntity<Page<Producto>> listarProductosPage(@PathVariable Integer page){
 
@@ -41,7 +40,6 @@ public class ProductoController {
         return new ResponseEntity<>(listado, HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "*")
     @PostMapping(path = "producto",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
@@ -51,7 +49,6 @@ public class ProductoController {
         return new ResponseEntity<>(producto, HttpStatus.CREATED);
     }
 
-    @CrossOrigin(origins = "*")
     @DeleteMapping("/productos/{idProducto}")
     public ResponseEntity<Producto> eliminarProducto(@PathVariable int idProducto){
         productoService.eliminar(idProducto);

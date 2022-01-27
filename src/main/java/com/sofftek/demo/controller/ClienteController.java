@@ -14,19 +14,18 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@CrossOrigin(origins = "*")
 @RestController
 public class ClienteController {
 
     @Autowired
     private ClienteService clienteService;
 
-    @CrossOrigin(origins = "*")
     @GetMapping("/clientes")
     public List<Cliente> listarClientes(){
         return clienteService.listarActivos();
     }
 
-    @CrossOrigin(origins = "*")
     @PostMapping(path = "cliente",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
@@ -39,20 +38,17 @@ public class ClienteController {
         }
     }
 
-    @CrossOrigin(origins = "*")
     @DeleteMapping("/cliente/{idCliente}")
     public ResponseEntity<Cliente> eliminarCliente(@PathVariable int idCliente){
         clienteService.eliminar(idCliente);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "*")
     @PostMapping("/cliente/{idCliente}")
     public ResponseEntity<Cliente> modificarCliente(@RequestBody Cliente cliente){
         clienteService.modificar(cliente);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
 
     }
 

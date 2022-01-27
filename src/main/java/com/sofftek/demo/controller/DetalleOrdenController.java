@@ -14,20 +14,19 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "*")
 @RestController
 public class DetalleOrdenController {
 
     @Autowired
     DetalleService detalleService ;
 
-    @CrossOrigin(origins = "*")
     @GetMapping("/detalles")
     public ResponseEntity<List<Detalle>> listarDetalles(@RequestParam(required=false, defaultValue="World")String name){
         List<Detalle> listado = detalleService.listarActivos();
         return new ResponseEntity<>(listado, HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "*")
     @GetMapping("/detalles/page/{page}")
     public ResponseEntity<Page<Detalle>> listarDetallesPage(@PathVariable Integer page){
 
@@ -37,7 +36,6 @@ public class DetalleOrdenController {
         return new ResponseEntity<>(listado, HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "*")
     @PostMapping(path = "detalle",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
@@ -53,7 +51,6 @@ public class DetalleOrdenController {
         return new ResponseEntity<>(detalleOrden, HttpStatus.CREATED);
     }
 
-    @CrossOrigin(origins = "*")
     @PutMapping("/detalle/{idDetalle}")
     public ResponseEntity<Detalle> modificarDetalle(@RequestBody Detalle detalleOrden){
 
@@ -66,7 +63,6 @@ public class DetalleOrdenController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "*")
     @DeleteMapping("/detalles/{idDetalle}")
     public ResponseEntity<Producto> eliminarDetalle(@PathVariable int idDetalle){
         detalleService.eliminar(idDetalle);

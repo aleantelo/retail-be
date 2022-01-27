@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "*")
 @RestController
 public class ProveedorController {
 
     @Autowired
     ProveedorService proveedorService;
 
-    @CrossOrigin(origins = "*")
     @GetMapping("/proveedores")
     public List<Proveedor> listarProveedores(){
 
@@ -26,7 +26,6 @@ public class ProveedorController {
 
     }
 
-    @CrossOrigin(origins = "*")
     @PostMapping(path = "proveedor",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
@@ -39,14 +38,12 @@ public class ProveedorController {
         }
     }
 
-    @CrossOrigin(origins = "*")
     @DeleteMapping("/proveedor/{idProveedor}")
     public ResponseEntity<Cliente> eliminarProveedor(@PathVariable int idProveedor){
         proveedorService.eliminar(idProveedor);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "*")
     @PostMapping("/proveedor/{idProveedor}")
     public ResponseEntity<Cliente> modificarProveedor(@RequestBody Proveedor proveedor){
         proveedorService.modificar(proveedor);
