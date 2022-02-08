@@ -7,7 +7,6 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -44,5 +43,4 @@ public class Producto extends Activable{
         this.setActivo(true);
         promocionProductos=new HashSet<>();
     }
-
 }

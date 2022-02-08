@@ -17,12 +17,8 @@ public class Empleado extends Activable{
     @Column(name = "apellido")
     private String apellido;
 
-    @ManyToOne(targetEntity = Empleado.class, fetch = FetchType.LAZY)
-    @JoinColumn(name = "jefe",referencedColumnName = "id")
-    private Empleado supervisor;
-
     @ManyToOne(targetEntity = Usuario.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "usuario",referencedColumnName = "id")
+    @JoinColumn(name = "usuario")
     private Usuario usuario;
 
     public Empleado(){

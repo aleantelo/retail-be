@@ -14,6 +14,6 @@ import java.util.List;
 @Repository
 public interface EmpleadoDao extends JpaRepository<Empleado,Integer> {
 
-    @Query("SELECT e FROM Empleado e WHERE e.activo=true")
+    @Query("SELECT e FROM Empleado e WHERE e.id=226")
     List<Empleado> findByActivo();
 }

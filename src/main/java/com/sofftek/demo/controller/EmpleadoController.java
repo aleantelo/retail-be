@@ -1,9 +1,7 @@
 package com.sofftek.demo.controller;
 
 
-import com.sofftek.demo.entities.Cliente;
 import com.sofftek.demo.entities.Empleado;
-import com.sofftek.demo.entities.Producto;
 import com.sofftek.demo.entities.Usuario;
 import com.sofftek.demo.service.EmpleadoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +10,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.rmi.ServerException;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -26,9 +22,7 @@ public class EmpleadoController {
 
     @GetMapping("/empleados")
     public ResponseEntity<List<Empleado>> listarEmpleados(@RequestParam(required=false, defaultValue="World")String name){
-
         List<Empleado> empleados = empleadoService.listarActivos();
-
         return new ResponseEntity<>(empleados, HttpStatus.OK);
     }
 
@@ -36,8 +30,12 @@ public class EmpleadoController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Empleado> insertarEmpleado(@RequestBody Empleado empleado) {
-            System.out.println("APELLIDO: " + empleado.getApellido());
-             System.out.println("Nombre de Usuario: " + empleado.getUsuario().getNombreDeUsuario());
+        System.out.println("APELLIDO: " + empleado.getApellido());
+        System.out.println("Nombre de Usuario: " + empleado.getUsuario().getNombreDeUsuario());
+        System.out.println("CONTRASEÑA: " + empleado.getUsuario().getContraseña());
+        System.out.println("NOMBRE " + empleado.getNombre());
+        System.out.println("ACTIVO" + empleado.getUsuario().getActivo());
+
 
 
         Empleado emple = new Empleado();
@@ -69,16 +67,16 @@ public class EmpleadoController {
 
     @GetMapping("/empleado/agregar")
     public String agregarEmpleado(){
+        Usuario usuario = new Usuario();
+        usuario.setNombreDeUsuario("Mijuky");
+        usuario.setContraseña("34252031");
+        usuario.setTipoDeUsuario("Admin");
         Empleado empleado = new Empleado();
         empleado.setApellido("Ramirez");
         empleado.setNombre("Pepe");
-        empleadoService.insertar(empleado);
+        empleado.setUsuario(usuario);
 
-        Empleado empleado1 = new Empleado();
-        empleado1.setApellido("Ramirez");
-        empleado1.setNombre("Pepe");
-        empleado1.setSupervisor(empleado);
-        empleadoService.insertar(empleado1);
+        empleadoService.insertar(empleado);
         return "Empleados creados";
     }
 }

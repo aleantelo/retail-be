@@ -10,7 +10,7 @@ import java.util.Set;
 @Setter
 @Getter
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Table(name = "user")
 public class Usuario extends Activable {
 
     @Column(name = "nombre_usuario")
@@ -21,4 +21,8 @@ public class Usuario extends Activable {
 
     @Column(name = "tipo")
     private String tipoDeUsuario;
+
+    public Usuario (){
+        this.setActivo(true);
+    }
 }
